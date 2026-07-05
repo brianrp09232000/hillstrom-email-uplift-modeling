@@ -1,0 +1,62 @@
+{
+    "primary_outcome": "visit",
+    "secondary_outcomes": [
+        "conversion",
+        "spend"
+    ],
+    "treatment_encoding": {
+        "0": "No Email / Control",
+        "1": "Email Treatment: Mens E-Mail or Womens E-Mail"
+    },
+    "original_treatment_column": "segment",
+    "binary_treatment_column": "treatment_binary",
+    "feature_columns_raw": [
+        "recency",
+        "history",
+        "history_segment",
+        "mens",
+        "womens",
+        "newbie",
+        "zip_code",
+        "channel"
+    ],
+    "numeric_columns": [
+        "recency",
+        "history",
+        "mens",
+        "womens",
+        "newbie"
+    ],
+    "categorical_columns": [
+        "history_segment",
+        "zip_code",
+        "channel"
+    ],
+    "encoded_feature_columns": [
+        "recency",
+        "history",
+        "mens",
+        "womens",
+        "newbie",
+        "history_segment_1) $0 - $100",
+        "history_segment_2) $100 - $200",
+        "history_segment_3) $200 - $350",
+        "history_segment_4) $350 - $500",
+        "history_segment_5) $500 - $750",
+        "history_segment_6) $750 - $1,000",
+        "history_segment_7) $1,000 +",
+        "zip_code_Rural",
+        "zip_code_Suburban",
+        "zip_code_Urban",
+        "channel_Multichannel",
+        "channel_Phone",
+        "channel_Web"
+    ],
+    "test_size": 0.25,
+    "random_state": 42,
+    "stratification": "segment + visit",
+    "cleaning_notes": [
+        "Corrected zip_code value 'Surburban' to 'Suburban'.",
+        "Excluded post-treatment outcome variables visit, conversion, and spend from model features."
+    ]
+}
