@@ -1,0 +1,42 @@
+{
+    "logistic_regression": {
+        "roc_auc": 0.624535012709177,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "brier_score": 0.12248658385961601,
+        "confusion_matrix": [
+            [
+                13651,
+                0
+            ],
+            [
+                2349,
+                0
+            ]
+        ]
+    },
+    "xgboost": {
+        "roc_auc": 0.6149978985660258,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "brier_score": 0.1229669991690411,
+        "confusion_matrix": [
+            [
+                13650,
+                1
+            ],
+            [
+                2349,
+                0
+            ]
+        ]
+    },
+    "metadata": {
+        "outcome": "visit",
+        "test_size": 16000,
+        "test_visit_rate": 0.1468125,
+        "model_type": "response_baseline"
+    }
+}
