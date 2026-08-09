@@ -1,0 +1,118 @@
+{
+    "metadata": {
+        "model_type": "binary_treatment_t_learner",
+        "outcome": "visit",
+        "treatment_definition": "Any email versus no email",
+        "test_size": 16000,
+        "observed_test_ate": 0.06105172999608584,
+        "cross_validation_folds": 5,
+        "cross_validation_scoring": "log_loss"
+    },
+    "lgr_t_learner": {
+        "base_learner": "logistic_regression",
+        "base_parameters": {
+            "max_iter": 2000,
+            "solver": "lbfgs"
+        },
+        "cross_validation": {
+            "treated_model": {
+                "best_parameters": {
+                    "C": 1.0
+                },
+                "mean_validation_log_loss": 0.4383099159427948
+            },
+            "control_model": {
+                "best_parameters": {
+                    "C": 1.0
+                },
+                "mean_validation_log_loss": 0.3230084522933335
+            }
+        },
+        "average_predicted_uplift": 0.0598405296433056,
+        "minimum_predicted_uplift": -0.03845325273346295,
+        "maximum_predicted_uplift": 0.12154112792215171,
+        "treated_model_auc": 0.6230652922868946,
+        "control_model_auc": 0.6375608976324971,
+        "treated_model_brier": 0.13564806894794787,
+        "control_model_brier": 0.0932152542759777,
+        "qini_score": 0.08904049731939576,
+        "auuc_score": 0.5919576330492472
+    },
+    "xgb_t_learner": {
+        "base_learner": "xgboost",
+        "base_parameters": {
+            "objective": "binary:logistic",
+            "eval_metric": "logloss",
+            "n_estimators": 200,
+            "max_depth": 3,
+            "learning_rate": 0.05,
+            "subsample": 0.8,
+            "colsample_bytree": 0.8,
+            "random_state": 42,
+            "n_jobs": 1
+        },
+        "cross_validation": {
+            "treated_model": {
+                "best_parameters": {
+                    "learning_rate": 0.05,
+                    "max_depth": 2
+                },
+                "mean_validation_log_loss": 0.43850129246711733
+            },
+            "control_model": {
+                "best_parameters": {
+                    "learning_rate": 0.05,
+                    "max_depth": 2
+                },
+                "mean_validation_log_loss": 0.32360646724700926
+            }
+        },
+        "average_predicted_uplift": 0.06023615226149559,
+        "minimum_predicted_uplift": -0.0848977118730545,
+        "maximum_predicted_uplift": 0.19887995719909668,
+        "treated_model_auc": 0.6201746432480693,
+        "control_model_auc": 0.6262562895799759,
+        "treated_model_brier": 0.1356949508190155,
+        "control_model_brier": 0.09353053569793701,
+        "qini_score": 0.044277246389235025,
+        "auuc_score": 0.5458036494446121
+    },
+    "rf_t_learner": {
+        "base_learner": "random_forest",
+        "base_parameters": {
+            "n_estimators": 300,
+            "criterion": "gini",
+            "max_depth": 8,
+            "min_samples_leaf": 50,
+            "max_features": "sqrt",
+            "bootstrap": true,
+            "random_state": 42,
+            "n_jobs": 1
+        },
+        "cross_validation": {
+            "treated_model": {
+                "best_parameters": {
+                    "max_depth": 8,
+                    "min_samples_leaf": 50
+                },
+                "mean_validation_log_loss": 0.4396012488033296
+            },
+            "control_model": {
+                "best_parameters": {
+                    "max_depth": 8,
+                    "min_samples_leaf": 50
+                },
+                "mean_validation_log_loss": 0.32507101131054
+            }
+        },
+        "average_predicted_uplift": 0.05988086077156309,
+        "minimum_predicted_uplift": -0.02925688079376243,
+        "maximum_predicted_uplift": 0.16254714480416932,
+        "treated_model_auc": 0.6185266359642265,
+        "control_model_auc": 0.6147275150420173,
+        "treated_model_brier": 0.13585209543796065,
+        "control_model_brier": 0.09345251004682327,
+        "qini_score": 0.0443865169960126,
+        "auuc_score": 0.5459559277570761
+    }
+}
