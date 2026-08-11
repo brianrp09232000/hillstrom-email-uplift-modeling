@@ -1,0 +1,114 @@
+{
+    "model": "x_learner",
+    "control_name": 0,
+    "random_state": 42,
+    "n_train": 48000,
+    "n_test": 16000,
+    "known_propensity": 0.6670833333333334,
+    "propensity_check": {
+        "known_p": 0.6670833333333334,
+        "mean_p": 0.6670962138497644,
+        "std_p": 0.00851642291808313,
+        "diff": 1.2880516431001965e-05,
+        "tolerance": 0.01,
+        "agrees": true
+    },
+    "model_family_selection": {
+        "method": "5-fold out-of-fold CV within X_train",
+        "winning_family": "random_forest",
+        "oof_scores": {
+            "random_forest": {
+                "qini_score": 0.05731438501245641,
+                "auuc_score": 0.556667392895187
+            },
+            "lightgbm": {
+                "qini_score": 0.04925271208191677,
+                "auuc_score": 0.5490465529211215
+            },
+            "linear": {
+                "qini_score": -0.02801822393003801,
+                "auuc_score": 0.4711364632211256
+            }
+        }
+    },
+    "mens_womens_segment_diagnostic": {
+        "womens_only": {
+            "n_customers": 7174,
+            "n_treated": 4798,
+            "n_control": 2376,
+            "treated_outcome_rate": 0.16444351813255523,
+            "control_outcome_rate": 0.10395622895622895,
+            "actual_lift": 0.06048728917632627,
+            "actual_lift_se": 0.008237964437193027,
+            "actual_lift_ci_lower": 0.04434087887942794,
+            "actual_lift_ci_upper": 0.0766336994732246,
+            "mean_tau_hat": 0.0733474948696919
+        },
+        "mens_only": {
+            "n_customers": 7253,
+            "n_treated": 4859,
+            "n_control": 2394,
+            "treated_outcome_rate": 0.1415929203539823,
+            "control_outcome_rate": 0.0998329156223893,
+            "actual_lift": 0.041760004731593,
+            "actual_lift_se": 0.007910325548315382,
+            "actual_lift_ci_lower": 0.02625576665689485,
+            "actual_lift_ci_upper": 0.057264242806291145,
+            "mean_tau_hat": 0.04180655401671589
+        },
+        "both": {
+            "n_customers": 1573,
+            "n_treated": 1017,
+            "n_control": 556,
+            "treated_outcome_rate": 0.30186823992133727,
+            "control_outcome_rate": 0.1420863309352518,
+            "actual_lift": 0.15978190898608546,
+            "actual_lift_se": 0.02066544679262129,
+            "actual_lift_ci_lower": 0.11927763327254773,
+            "actual_lift_ci_upper": 0.2002861846996232,
+            "mean_tau_hat": 0.07877924624737355
+        },
+        "Overall": {
+            "n_customers": 16000,
+            "n_treated": 10674,
+            "n_control": 5326,
+            "treated_outcome_rate": 0.16713509462244708,
+            "control_outcome_rate": 0.10608336462636124,
+            "actual_lift": 0.06105172999608584,
+            "actual_lift_se": 0.005554343980065103,
+            "actual_lift_ci_lower": 0.05016521579515824,
+            "actual_lift_ci_upper": 0.07193824419701345,
+            "mean_tau_hat": 0.05958360117659554
+        }
+    },
+    "qini_score": {
+        "X-Learner": 0.04995950953898738
+    },
+    "auuc_score": {
+        "X-Learner": 0.5510278854110819
+    },
+    "ate_test": 0.06105172999608584,
+    "top_decile_actual_lift": 0.09012987012987014,
+    "uplift_at_top_k": {
+        "10pct": {
+            "actual_lift": 0.09012987012987014,
+            "incremental_outcomes_captured": 94.63636363636365
+        },
+        "20pct": {
+            "actual_lift": 0.0829854069744324,
+            "incremental_outcomes_captured": 176.01204819277112
+        },
+        "30pct": {
+            "actual_lift": 0.07037802562384743,
+            "incremental_outcomes_captured": 225.35043804755946
+        }
+    },
+    "roi_best_strategy": "send_everyone",
+    "roi_best_net_value": 4621.101120554216,
+    "roi_assumptions": {
+        "email_cost": 0.05,
+        "email_cost_source": "external assumption (README illustrative example; not observable in the data)",
+        "profit_per_conversion": 113.212399103139,
+        "profit_per_conversion_source": "empirical: mean(spend | conversion==1) on train split, both arms pooled -- revenue proxy, not true margin"
+    }
+}
