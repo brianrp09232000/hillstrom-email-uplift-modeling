@@ -21,8 +21,8 @@
         "maximum_predicted_uplift": 0.2861295577563151,
         "pct_positive_uplift": 94.81875,
         "pct_negative_uplift": 5.1812499999999995,
-        "qini_score": 0.0213190233626314,
-        "auuc_score": 0.012289555270869083,
+        "qini_score": 0.0031765294777895826,
+        "auuc_score": 0.002235463356093922,
         "cross_validation": {
             "n_estimators": 100,
             "fold_qini_scores": [
