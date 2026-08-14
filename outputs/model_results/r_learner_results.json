@@ -1,0 +1,260 @@
+{
+    "model": "r_learner",
+    "control_name": 0,
+    "random_state": 42,
+    "n_train": 48000,
+    "n_test": 16000,
+    "known_propensity": 0.6670833333333334,
+    "propensity_check": {
+        "known_p": 0.6670833333333334,
+        "mean_p": 0.6670962138497644,
+        "std_p": 0.00851642291808313,
+        "diff": 1.2880516431001965e-05,
+        "tolerance": 0.01,
+        "agrees": true
+    },
+    "model_family_selection": {
+        "method": "5-fold out-of-fold CV within X_train",
+        "winning_family": "random_forest",
+        "oof_scores": {
+            "random_forest": {
+                "qini_score": 0.05592745307859044,
+                "auuc_score": 0.5549377896290982
+            },
+            "linear": {
+                "qini_score": 0.04237561502666464,
+                "auuc_score": 0.5416867744478264
+            },
+            "lightgbm": {
+                "qini_score": 0.03821357906413884,
+                "auuc_score": 0.537884506141152
+            }
+        }
+    },
+    "mens_womens_segment_diagnostic": {
+        "womens_only": {
+            "n_customers": 7174,
+            "n_treated": 4798,
+            "n_control": 2376,
+            "treated_outcome_rate": 0.16444351813255523,
+            "control_outcome_rate": 0.10395622895622895,
+            "actual_lift": 0.06048728917632627,
+            "actual_lift_se": 0.008237964437193027,
+            "actual_lift_ci_lower": 0.04434087887942794,
+            "actual_lift_ci_upper": 0.0766336994732246,
+            "mean_tau_hat": 0.07737628647821643
+        },
+        "mens_only": {
+            "n_customers": 7253,
+            "n_treated": 4859,
+            "n_control": 2394,
+            "treated_outcome_rate": 0.1415929203539823,
+            "control_outcome_rate": 0.0998329156223893,
+            "actual_lift": 0.041760004731593,
+            "actual_lift_se": 0.007910325548315382,
+            "actual_lift_ci_lower": 0.02625576665689485,
+            "actual_lift_ci_upper": 0.057264242806291145,
+            "mean_tau_hat": 0.0391510612382042
+        },
+        "both": {
+            "n_customers": 1573,
+            "n_treated": 1017,
+            "n_control": 556,
+            "treated_outcome_rate": 0.30186823992133727,
+            "control_outcome_rate": 0.1420863309352518,
+            "actual_lift": 0.15978190898608546,
+            "actual_lift_se": 0.02066544679262129,
+            "actual_lift_ci_lower": 0.11927763327254773,
+            "actual_lift_ci_upper": 0.2002861846996232,
+            "mean_tau_hat": 0.0786010089417835
+        },
+        "Overall": {
+            "n_customers": 16000,
+            "n_treated": 10674,
+            "n_control": 5326,
+            "treated_outcome_rate": 0.16713509462244708,
+            "control_outcome_rate": 0.10608336462636124,
+            "actual_lift": 0.06105172999608584,
+            "actual_lift_se": 0.005554343980065103,
+            "actual_lift_ci_lower": 0.05016521579515824,
+            "actual_lift_ci_upper": 0.07193824419701345,
+            "mean_tau_hat": 0.060168719588802815
+        }
+    },
+    "mens_womens_segment_train": {
+        "womens_only": {
+            "n_customers": 21560,
+            "n_treated": 14417,
+            "n_control": 7143,
+            "treated_outcome_rate": 0.1693140043004786,
+            "control_outcome_rate": 0.09309813803723925,
+            "actual_lift": 0.07621586626323935,
+            "actual_lift_se": 0.004645216647627148,
+            "actual_lift_ci_lower": 0.06711124163389015,
+            "actual_lift_ci_upper": 0.08532049089258856
+        },
+        "mens_only": {
+            "n_customers": 21565,
+            "n_treated": 14321,
+            "n_control": 7244,
+            "treated_outcome_rate": 0.13923608686544237,
+            "control_outcome_rate": 0.09980673660960795,
+            "actual_lift": 0.03942935025583441,
+            "actual_lift_se": 0.004557829579199879,
+            "actual_lift_ci_lower": 0.030496004280602645,
+            "actual_lift_ci_upper": 0.04836269623106618
+        },
+        "both": {
+            "n_customers": 4875,
+            "n_treated": 3282,
+            "n_control": 1593,
+            "treated_outcome_rate": 0.2781840341255332,
+            "control_outcome_rate": 0.19397363465160075,
+            "actual_lift": 0.08421039947393247,
+            "actual_lift_se": 0.012625711963058565,
+            "actual_lift_ci_lower": 0.05946400402633768,
+            "actual_lift_ci_upper": 0.10895679492152725
+        },
+        "Overall": {
+            "n_customers": 48000,
+            "n_treated": 32020,
+            "n_control": 15980,
+            "treated_outcome_rate": 0.1670206121174266,
+            "control_outcome_rate": 0.10619524405506883,
+            "actual_lift": 0.060825368062357776,
+            "actual_lift_se": 0.0032070590405201345,
+            "actual_lift_ci_lower": 0.05453953234293831,
+            "actual_lift_ci_upper": 0.06711120378177723
+        }
+    },
+    "mens_womens_segment_pooled": {
+        "womens_only": {
+            "n_customers": 28734,
+            "n_treated": 19215,
+            "n_control": 9519,
+            "treated_outcome_rate": 0.16809784022898777,
+            "control_outcome_rate": 0.09580838323353294,
+            "actual_lift": 0.07228945699545483,
+            "actual_lift_se": 0.004047182671103728,
+            "actual_lift_ci_lower": 0.06435697896009153,
+            "actual_lift_ci_upper": 0.08022193503081813
+        },
+        "mens_only": {
+            "n_customers": 28818,
+            "n_treated": 19180,
+            "n_control": 9638,
+            "treated_outcome_rate": 0.13983315954118875,
+            "control_outcome_rate": 0.09981323926125753,
+            "actual_lift": 0.04001992027993122,
+            "actual_lift_se": 0.003949042086657496,
+            "actual_lift_ci_lower": 0.032279797790082526,
+            "actual_lift_ci_upper": 0.04776004276977991
+        },
+        "both": {
+            "n_customers": 6448,
+            "n_treated": 4299,
+            "n_control": 2149,
+            "treated_outcome_rate": 0.2837869271923703,
+            "control_outcome_rate": 0.18054909260120985,
+            "actual_lift": 0.10323783459116045,
+            "actual_lift_se": 0.010778145810878423,
+            "actual_lift_ci_lower": 0.08211266880183875,
+            "actual_lift_ci_upper": 0.12436300038048216
+        },
+        "Overall": {
+            "n_customers": 64000,
+            "n_treated": 42694,
+            "n_control": 21306,
+            "treated_outcome_rate": 0.16704923408441466,
+            "control_outcome_rate": 0.10616727682343002,
+            "actual_lift": 0.06088195726098464,
+            "actual_lift_se": 0.002777287642805201,
+            "actual_lift_ci_lower": 0.055438473481086444,
+            "actual_lift_ci_upper": 0.06632544104088284
+        }
+    },
+    "mens_womens_both_train_vs_test_consistency": {
+        "segment": "both",
+        "estimate_a": 0.08421039947393247,
+        "estimate_b": 0.15978190898608546,
+        "diff": 0.075571509512153,
+        "se_diff": 0.02421712810621403,
+        "z": 3.120580986345842,
+        "agrees": false
+    },
+    "qini_score": {
+        "R-Learner": 0.04584695109057349
+    },
+    "auuc_score": {
+        "R-Learner": 0.5471609501686595
+    },
+    "ate_test": 0.06105172999608584,
+    "top_decile_actual_lift": 0.07231478199220134,
+    "uplift_at_top_k": {
+        "10pct": {
+            "actual_lift": 0.07231478199220134,
+            "incremental_outcomes_captured": 76.21978021978022
+        },
+        "20pct": {
+            "actual_lift": 0.07266047788069085,
+            "incremental_outcomes_captured": 154.33085501858739
+        },
+        "30pct": {
+            "actual_lift": 0.07017843726959201,
+            "incremental_outcomes_captured": 223.30778739184177
+        }
+    },
+    "roi_fixed_volume_comparison": {
+        "description": "constant contact volume (top 30%): response-probability vs. predicted-uplift selection, same n and same cost",
+        "top_k": 0.3,
+        "n_targeted": 4800,
+        "target_by_response_probability": {
+            "incremental_conversion_rate": 0.0019483598430966847,
+            "ci_lower": -0.004386385993697614,
+            "ci_upper": 0.008283105679890983,
+            "net_value": 818.7767623353175
+        },
+        "target_by_predicted_uplift": {
+            "incremental_conversion_rate": 0.006348286366684044,
+            "ci_lower": 0.0017875635386149199,
+            "ci_upper": 0.01090900919475317,
+            "net_value": 3209.782702877041
+        }
+    },
+    "roi_assumptions": {
+        "email_cost": 0.05,
+        "email_cost_source": "external assumption (README illustrative example; not observable in the data)",
+        "profit_per_conversion": 113.212399103139,
+        "profit_per_conversion_source": "empirical: mean(spend | conversion==1) on train split, both arms pooled -- revenue proxy, not true margin"
+    },
+    "comparison_vs_x_learner": {
+        "womens_only": {
+            "true_actual_lift_pooled": 0.07228945699545483,
+            "x_learner_mean_tau_hat": 0.0733474948696919,
+            "r_learner_mean_tau_hat": 0.07737628647821643,
+            "x_learner_pct_of_true": 1.0146361297789745,
+            "r_learner_pct_of_true": 1.0703675154605383
+        },
+        "mens_only": {
+            "true_actual_lift_pooled": 0.04001992027993122,
+            "x_learner_mean_tau_hat": 0.04180655401671589,
+            "r_learner_mean_tau_hat": 0.0391510612382042,
+            "x_learner_pct_of_true": 1.0446436105891148,
+            "r_learner_pct_of_true": 0.9782893360194242
+        },
+        "both": {
+            "true_actual_lift_pooled": 0.10323783459116045,
+            "x_learner_mean_tau_hat": 0.07877924624737355,
+            "r_learner_mean_tau_hat": 0.0786010089417835,
+            "x_learner_pct_of_true": 0.7630850313681306,
+            "r_learner_pct_of_true": 0.7613585586433209
+        },
+        "Overall": {
+            "true_actual_lift_pooled": 0.06088195726098464,
+            "x_learner_mean_tau_hat": 0.05958360117659554,
+            "r_learner_mean_tau_hat": 0.060168719588802815,
+            "x_learner_pct_of_true": 0.9786742059092582,
+            "r_learner_pct_of_true": 0.9882849089571092
+        }
+    }
+}

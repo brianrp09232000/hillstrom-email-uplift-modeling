@@ -142,6 +142,30 @@ def build_segment_table(y, treatment, segment, segment_order=None, tau_hat=None)
     return table[cols]
 
 
+def segments_agree_across_samples(table_a, table_b, segment, z_threshold=1.96):
+    """Compare one segment's actual_lift estimate across two independently-computed
+    build_segment_table outputs (e.g. from train vs. test), via a two-sample z-test on
+    the difference. Used to check whether a segment effect "discovered" by searching
+    across many candidate features/segments in a single sample actually replicates in
+    an independent sample, or was inflated by that search -- picking whichever segment
+    looks most extreme in one sample biases that sample's estimate upward on average
+    (a selection/winner's-curse effect), even though the segment itself may be real.
+    """
+    a, b = table_a.loc[segment], table_b.loc[segment]
+    diff = float(b["actual_lift"] - a["actual_lift"])
+    se_diff = float(np.sqrt(a["actual_lift_se"] ** 2 + b["actual_lift_se"] ** 2))
+    z = diff / se_diff
+    return {
+        "segment": segment,
+        "estimate_a": float(a["actual_lift"]),
+        "estimate_b": float(b["actual_lift"]),
+        "diff": diff,
+        "se_diff": se_diff,
+        "z": float(z),
+        "agrees": bool(abs(z) < z_threshold),
+    }
+
+
 def build_uplift_eval_frame(y, treatment, tau_hat_dict):
     """Builds the DataFrame shape causalml.metrics functions require: column 'y'
     for the outcome, column 'w' for treatment (0/1), and one column per entry in
