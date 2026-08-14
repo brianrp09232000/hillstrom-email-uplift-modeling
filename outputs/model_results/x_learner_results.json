@@ -103,8 +103,23 @@
             "incremental_outcomes_captured": 225.35043804755946
         }
     },
-    "roi_best_strategy": "send_everyone",
-    "roi_best_net_value": 4621.101120554216,
+    "roi_fixed_volume_comparison": {
+        "description": "constant contact volume (top 30%): response-probability vs. predicted-uplift selection, same n and same cost",
+        "top_k": 0.3,
+        "n_targeted": 4800,
+        "target_by_response_probability": {
+            "incremental_conversion_rate": 0.0019483598430966847,
+            "ci_lower": -0.004386385993697614,
+            "ci_upper": 0.008283105679890983,
+            "net_value": 818.7767623353175
+        },
+        "target_by_predicted_uplift": {
+            "incremental_conversion_rate": 0.006239060537101732,
+            "ci_lower": 0.0016704795361138624,
+            "ci_upper": 0.010807641538089602,
+            "net_value": 3150.4272554640293
+        }
+    },
     "roi_assumptions": {
         "email_cost": 0.05,
         "email_cost_source": "external assumption (README illustrative example; not observable in the data)",
