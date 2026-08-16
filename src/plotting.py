@@ -1,18 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 from IPython.display import display
-
 from src.config import FIGURES_DIR
-from src.metrics import get_cumulative_gain_curve, get_qini_curve, propensity_matches_known
+from src.metrics import get_cumulative_gain_curve, get_qini_curve, compute_qini_auuc, propensity_matches_known
 
 
 def save_fig(fig, filename, dpi=150, show=True, close=True):
-    """Ensures FIGURES_DIR exists, saves `fig` as a PNG at FIGURES_DIR/filename,
-    displays it inline (so it renders in the notebook regardless of cell output
-    settings), and returns the saved path. All notebook figures should be saved
-    through this helper so every plot lands in the same place with the same
-    conventions.
-    """
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     path = FIGURES_DIR / filename
     fig.savefig(path, dpi=dpi, bbox_inches="tight")
@@ -23,47 +17,48 @@ def save_fig(fig, filename, dpi=150, show=True, close=True):
     return path
 
 
-def _plot_curve_with_random_baseline(curve_df, xlabel, ylabel, title, figsize):
-    """Shared rendering for Qini/cumulative-gain curves. All columns returned by
-    causalml.metrics.get_qini/get_cumgain converge to the same value at the full
-    population (it's an order-invariant total), so the random-targeting baseline
-    is just the diagonal from (first index, 0) to (last index, that shared value).
-    """
-    fig, ax = plt.subplots(figsize=figsize)
-    for col in curve_df.columns:
-        ax.plot(curve_df.index, curve_df[col], label=col)
+def _plot_curve_with_random_baseline(curve_df, xlabel, ylabel, title, figsize, score_labels=None):
+    n = curve_df.index.max()
+    x = curve_df.index / n  # normalize x-axis to 0-1
 
-    first_idx, last_idx = curve_df.index[0], curve_df.index[-1]
+    colors = cm.tab10.colors + cm.tab20.colors  # enough distinct colors for 10+ models
+    fig, ax = plt.subplots(figsize=figsize)
+    for i, col in enumerate(curve_df.columns):
+        label = col
+        if score_labels is not None and col in score_labels:
+            label = f"{col} ({score_labels[col]:.4f})"
+        ax.plot(x, curve_df[col], label=label, linewidth=1.5, color=colors[i % len(colors)])
+
     endpoint = curve_df.iloc[-1, 0]
-    ax.plot([first_idx, last_idx], [0, endpoint], "k--", label="Random")
+    ax.plot([0, 1], [0, endpoint], "k--", label="Random", linewidth=1.5)
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
-    ax.legend()
+    ax.set_xlim(0, 1)
+    ax.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), fontsize=9)
+    fig.tight_layout()
     return fig
 
 
-def plot_qini_curve(y, treatment, tau_hat_dict, normalize=False, figsize=(8, 8)):
-    """Qini curve for one or more models/variants, plus a random-targeting
-    diagonal baseline. Computed via causalml.metrics.get_qini (through
-    src.metrics.get_qini_curve) and rendered with matplotlib directly, since
-    causalml.metrics.plot_qini renders its own figure and cannot be saved
-    through `save_fig`. Returns the Figure for the caller to save.
-    """
+def plot_qini_curve(y, treatment, tau_hat_dict, normalize=True, figsize=(10, 8)):
     qini_df = get_qini_curve(y, treatment, tau_hat_dict, normalize=normalize)
+    qini_scores = compute_qini_auuc(y, treatment, tau_hat_dict, normalize=normalize)["qini_score"]
     return _plot_curve_with_random_baseline(
-        qini_df, "Number of customers targeted", "Qini", "Qini Curve", figsize
+        qini_df, "Fraction of population targeted", "Qini", "Qini Curve",
+        figsize, score_labels=qini_scores.to_dict(),
     )
 
 
-def plot_cumulative_gain_curve(y, treatment, tau_hat_dict, normalize=False, figsize=(8, 8)):
-    """Cumulative gain curve, same pattern as plot_qini_curve but backed by
-    causalml.metrics.get_cumgain (through src.metrics.get_cumulative_gain_curve).
+def plot_cumulative_gain_curve(y, treatment, tau_hat_dict, normalize=True, figsize=(10, 8)):
+    """Cumulative gain (uplift/AUUC) curve, same pattern as plot_qini_curve but
+    backed by causalml.metrics.get_cumgain (through src.metrics.get_cumulative_gain_curve).
     """
     gain_df = get_cumulative_gain_curve(y, treatment, tau_hat_dict, normalize=normalize)
+    auuc_scores = compute_qini_auuc(y, treatment, tau_hat_dict, normalize=normalize)["auuc_score"]
     return _plot_curve_with_random_baseline(
-        gain_df, "Number of customers targeted", "Cumulative gain", "Cumulative Gain Curve", figsize
+        gain_df, "Fraction of population targeted", "Cumulative Gain", "Uplift Curve (AUUC)",
+        figsize, score_labels=auuc_scores.to_dict(),
     )
 
 
@@ -71,13 +66,6 @@ def plot_decile_lift_bar(
     decile_table, title="Actual lift by predicted-uplift decile",
     xlabel="Decile (1 = highest predicted uplift)", figsize=(8, 5),
 ):
-    """Bar chart of actual_lift per row (e.g. decile or segment table), excluding
-    the "Overall" row, with a horizontal reference line at the Overall row's
-    actual_lift (the ATE). Error bars show the 95% CI on each row's lift (from
-    actual_lift_se), so visibly overlapping bars signal that adjacent rows aren't
-    reliably distinguishable from noise alone -- not necessarily a ranking failure.
-    Works for both build_decile_table and build_segment_table output (same shape).
-    """
     rows = decile_table.drop(index="Overall")
     ate = decile_table.loc["Overall", "actual_lift"]
 
@@ -95,14 +83,6 @@ def plot_decile_lift_bar(
 
 
 def plot_propensity_diagnostic(p_hat, known_p, tolerance=0.01, figsize=(7.5, 5)):
-    """Histogram of estimated propensity scores against the known randomized-design
-    propensity. The x-axis is zoomed to the 1st-99th percentile band of `p_hat` so
-    the bulk of the distribution is visible even when a handful of outliers span a
-    much wider range (points outside that band are counted, not dropped -- noted in
-    a corner annotation instead). Mean and known propensity are marked, and the
-    title reports an explicit PASS/FAIL verdict from `propensity_matches_known`, so
-    agreement is visible at a glance rather than something the reader has to eyeball.
-    """
     p_hat = np.asarray(p_hat)
     check = propensity_matches_known(p_hat, known_p, tolerance=tolerance)
 

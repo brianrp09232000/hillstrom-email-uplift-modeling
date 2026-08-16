@@ -509,39 +509,27 @@ Interpretation:
 - A model can have weak classification AUC but still produce a useful uplift ranking.
 - A model can have strong classification AUC but still perform poorly for uplift targeting.
 
-### Policy Value and ROI Simulation
+### Policy Value: Constant-Volume Targeting Comparison
 
-The final project should include a business simulation.
+The business evaluation holds the number of contacted customers **fixed** (the top 30% by score, ~4,800 of the 16,000 test customers) and compares two ways of choosing *which* customers to email:
 
-Example assumptions:
+1. **Target by predicted response probability** — rank by a non-causal response model's predicted probability of purchase, target the top 30%.
+2. **Target by predicted uplift** — rank by `tau_hat` (predicted treatment effect), target the same top 30%.
 
-| Item | Example Value |
+Both rules contact the same number of customers at the same email cost, so any difference in realized lift or net value is due purely to *which* customers each rule selects. This deliberately isolates the value of uplift modeling from the separate, assumption-dependent question of *how many* customers to email (which flips with unobservable per-email costs and is intentionally not modeled).
+
+For each rule, realized treated-vs-control lift is measured within the selected subgroup from held-out `conversion`/`spend` outcomes — valid because treatment stays randomized within any subgroup defined by a pre-treatment score — reported with a 95% CI so significance can be read directly.
+
+**Outcome note (documented proxy):** both ranking signals are defined on the project's primary outcome, `visit` (`tau_hat` is visit-uplift; the response score is visit-probability), while the realized lift/net value is measured on `conversion`/`spend` — the business outcome. This is an apples-to-apples *ranking* comparison (both signals visit-based) evaluated on conversion, not a claim that either signal was trained on conversion; it assumes visit-persuadability tracks conversion-persuadability. A conversion-trained uplift model is the proper tool and is a documented follow-up.
+
+Assumptions (shared identically by both rules, so `net_value` differences reflect selection, not cost):
+
+| Item | Value |
 |---|---:|
 | Email cost | `$0.05` per customer |
-| Incentive cost | `$2.00` per customer |
-| Profit per conversion | `$50.00` |
+| Profit per conversion | empirical: mean `spend` among train-split converters (~`$113`) |
 
-Expected incremental profit:
-
-```text
-ExpectedProfit(X) = tau_hat(X) * ValueOfConversion - CostOfTreatment
-```
-
-Decision rule:
-
-```text
-Send email if ExpectedProfit(X) > 0
-```
-
-Compare strategies:
-
-1. Send to everyone
-2. Send to no one
-3. Send to customers with highest predicted response
-4. Send to customers with highest predicted uplift
-5. Send only when expected incremental profit is positive
-
-This is the most business-relevant evaluation because it translates uplift scores into targeting decisions.
+This is the most business-relevant evaluation because it translates uplift scores into targeting decisions: at a fixed contact budget, ranking by uplift rather than by response probability is what determines whether the campaign captures real incremental conversions or just re-contacts customers who would have bought anyway. Implemented in `src/roi.py::compare_targeting_strategies`; see `06_x_learner.ipynb` for the worked comparison.
 
 ---
 
