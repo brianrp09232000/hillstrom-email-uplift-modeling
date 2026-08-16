@@ -1,0 +1,122 @@
+{
+    "metadata": {
+        "model_type": "causal_forest_uplift_random_forest",
+        "library": "causalml",
+        "outcome": "visit",
+        "treatment_definition": "Any email versus no email",
+        "test_size": 16000,
+        "cross_validation_folds": 5
+    },
+    "causal_forest": {
+        "base_learner": "UpliftRandomForestClassifier",
+        "base_parameters": {
+            "n_estimators": 200,
+            "max_depth": 10,
+            "min_samples_leaf": 10,
+            "random_state": 42
+        },
+        "average_predicted_uplift": 0.06077787526613412,
+        "std_predicted_uplift": 0.037719396501696624,
+        "minimum_predicted_uplift": -0.16465764964676635,
+        "maximum_predicted_uplift": 0.2861295577563151,
+        "pct_positive_uplift": 94.81875,
+        "pct_negative_uplift": 5.1812499999999995,
+        "qini_score": 0.0031765294777895826,
+        "auuc_score": 0.002235463356093922,
+        "cross_validation": {
+            "n_estimators": 100,
+            "fold_qini_scores": [
+                0.016640379780863704,
+                0.009199939423070624,
+                0.02052350495036171,
+                0.014919301075107999,
+                0.0213190233626314
+            ],
+            "fold_auuc_scores": [
+                0.009677887434491092,
+                0.005473714828966647,
+                0.010990291015513881,
+                0.00949763411175298,
+                0.012289555270869083
+            ],
+            "mean_qini": 0.016520429718407087,
+            "std_qini": 0.004363913184037235,
+            "mean_auuc": 0.009585816532318736,
+            "std_auuc": 0.0022894709148324603
+        },
+        "top_features": [
+            {
+                "feature": "history",
+                "importance": 0.343410040860285
+            },
+            {
+                "feature": "recency",
+                "importance": 0.1831177734443422
+            },
+            {
+                "feature": "zip_code_Suburban",
+                "importance": 0.05232238026229771
+            },
+            {
+                "feature": "newbie",
+                "importance": 0.051857952505368135
+            },
+            {
+                "feature": "channel_Phone",
+                "importance": 0.04708942781780023
+            },
+            {
+                "feature": "channel_Web",
+                "importance": 0.04526428921304843
+            },
+            {
+                "feature": "zip_code_Urban",
+                "importance": 0.04205112759148589
+            },
+            {
+                "feature": "zip_code_Rural",
+                "importance": 0.0419353245429865
+            },
+            {
+                "feature": "womens",
+                "importance": 0.034686268159269194
+            },
+            {
+                "feature": "mens",
+                "importance": 0.03070475913391273
+            },
+            {
+                "feature": "history_segment_3) $200 - $350",
+                "importance": 0.02587432379787926
+            },
+            {
+                "feature": "history_segment_1) $0 - $100",
+                "importance": 0.023086733397346248
+            },
+            {
+                "feature": "history_segment_2) $100 - $200",
+                "importance": 0.022991905453267448
+            },
+            {
+                "feature": "channel_Multichannel",
+                "importance": 0.021804713182221415
+            },
+            {
+                "feature": "history_segment_4) $350 - $500",
+                "importance": 0.012547101393712443
+            },
+            {
+                "feature": "history_segment_5) $500 - $750",
+                "importance": 0.010162202999944818
+            },
+            {
+                "feature": "history_segment_6) $750 - $1,000",
+                "importance": 0.006727693117201315
+            },
+            {
+                "feature": "history_segment_7) $1,000 +",
+                "importance": 0.0043659831276311005
+            }
+        ]
+    }
+}
