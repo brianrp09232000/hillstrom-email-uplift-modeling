@@ -15,6 +15,7 @@ All affected notebooks were run from the first code cell through the final expor
 | `07_r_learner.ipynb` | PASS | 2.74 min |
 | `causal_forest.ipynb` | PASS | 57.83 min |
 | `10_evaluation_qini_auuc.ipynb` | PASS | 0.12 min |
+| `11_roi_targeting_policy.ipynb` | PASS | 0.04 min |
 
 The forest runtime includes five 200-tree out-of-fold fits followed by one final 200-tree fit on all 48,000 training rows.
 
@@ -32,6 +33,21 @@ Within each family, the variant with the highest five-fold out-of-fold validatio
 | Uplift Random Forest | Uplift Random Forest | 0.048572 | 0.006527 | 0.547398 | 0.507892 |
 
 The response baseline has the highest test Qini in this one split, but it was not selected by looking at test performance. The T-Learner XGB variant has the highest validation Qini. The uplift random forest has the largest validation-to-test degradation (Qini gap 0.042045).
+
+## Cross-model targeting-policy results
+
+Notebook 11 excludes all 48,000-row OOF files from held-out policy evaluation, fingerprint-validates every 16,000-row test prediction file, and retains only the family-level variants selected by Notebook 10's training-only OOF Qini. The shared response policy uses the OOF-selected XGBoost response score. At the same 4,800-customer contact volume, the observed held-out conversion-policy results were:
+
+| Policy score | Conversion lift | 95% CI | Estimated net value | Significant at 95% |
+|---|---:|---:|---:|---:|
+| Response Baseline (XGB) | 0.001924 | [-0.004140, 0.007988] | $805 | No |
+| Uplift Random Forest | 0.006812 | [0.001927, 0.011698] | $3,462 | Yes |
+| X-Learner | 0.006239 | [0.001670, 0.010808] | $3,150 | Yes |
+| R-Learner | 0.006066 | [0.001549, 0.010584] | $3,056 | Yes |
+| S-Learner (XGB) | 0.005748 | [0.000174, 0.011321] | $2,883 | Yes |
+| T-Learner (XGB) | 0.005141 | [-0.000160, 0.010441] | $2,553 | No |
+
+The uplift random forest has the largest observed conversion-based policy value despite its weak held-out visit Qini. This is not a contradiction: the models were trained and selected to rank visit uplift, while Notebook 11 evaluates a downstream conversion policy. These nominal per-policy confidence intervals are not adjusted for the five-model comparison, so the profit ordering is exploratory and should not be used to retune variants on the test set.
 
 ## S-Learner comparability check
 
@@ -69,5 +85,7 @@ The row-level prediction CSVs are published with this report under the project o
 
 - `validation_test_uplift_comparison.csv`
 - `model_variant_validation_scores.csv`
+- `roi_policy_cross_model_comparison.csv`
+- `roi_policy_cross_model_lift.png`
 - per-model JSON summaries under `outputs/model_results/`
 - per-model JSON summaries, including decile, segment, and ROI diagnostics where applicable
