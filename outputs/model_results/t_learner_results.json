@@ -19,24 +19,24 @@
                 "best_parameters": {
                     "C": 1.0
                 },
-                "mean_validation_log_loss": 0.4383099159427948
+                "mean_validation_log_loss": 0.43830436698586095
             },
             "control_model": {
                 "best_parameters": {
-                    "C": 1.0
+                    "C": 10.0
                 },
-                "mean_validation_log_loss": 0.3230084522933335
+                "mean_validation_log_loss": 0.32299754533658154
             }
         },
-        "average_predicted_uplift": 0.0598405296433056,
-        "minimum_predicted_uplift": -0.03845325273346295,
-        "maximum_predicted_uplift": 0.12154112792215171,
-        "treated_model_auc": 0.6230652922868946,
-        "control_model_auc": 0.6375608976324971,
-        "treated_model_brier": 0.13564806894794787,
-        "control_model_brier": 0.0932152542759777,
-        "qini_score": 0.08904049731939576,
-        "auuc_score": 0.5919576330492472
+        "average_predicted_uplift": 0.059897143885047896,
+        "minimum_predicted_uplift": -0.03648200997744344,
+        "maximum_predicted_uplift": 0.12233887757960593,
+        "treated_model_auc": 0.6230800466085236,
+        "control_model_auc": 0.6375326444767868,
+        "treated_model_brier": 0.135651410248758,
+        "control_model_brier": 0.09321339249184418,
+        "qini_score": 0.08769414217531575,
+        "auuc_score": 0.5905335596434509
     },
     "xgb_t_learner": {
         "base_learner": "xgboost",
@@ -57,25 +57,25 @@
                     "learning_rate": 0.05,
                     "max_depth": 2
                 },
-                "mean_validation_log_loss": 0.43850129246711733
+                "mean_validation_log_loss": 0.43846739343326896
             },
             "control_model": {
                 "best_parameters": {
                     "learning_rate": 0.05,
                     "max_depth": 2
                 },
-                "mean_validation_log_loss": 0.32360646724700926
+                "mean_validation_log_loss": 0.32344083233748727
             }
         },
-        "average_predicted_uplift": 0.06023615226149559,
-        "minimum_predicted_uplift": -0.0848977118730545,
-        "maximum_predicted_uplift": 0.19887995719909668,
-        "treated_model_auc": 0.6201746432480693,
-        "control_model_auc": 0.6262562895799759,
-        "treated_model_brier": 0.1356949508190155,
-        "control_model_brier": 0.09353053569793701,
-        "qini_score": 0.044277246389235025,
-        "auuc_score": 0.5458036494446121
+        "average_predicted_uplift": 0.05998636409640312,
+        "minimum_predicted_uplift": -0.06863455474376678,
+        "maximum_predicted_uplift": 0.20710545778274536,
+        "treated_model_auc": 0.6200734752606596,
+        "control_model_auc": 0.6263709750870364,
+        "treated_model_brier": 0.1357003487934707,
+        "control_model_brier": 0.0934994337156911,
+        "qini_score": 0.05237869693513131,
+        "auuc_score": 0.5544094857828058
     },
     "rf_t_learner": {
         "base_learner": "random_forest",
@@ -112,7 +112,24 @@
         "control_model_auc": 0.6147275150420173,
         "treated_model_brier": 0.13585209543796065,
         "control_model_brier": 0.09345251004682327,
-        "qini_score": 0.0443865169960126,
-        "auuc_score": 0.5459559277570761
+        "qini_score": 0.04438729149049975,
+        "auuc_score": 0.5459558960190811
+    },
+    "validation_uplift_metrics": {
+        "method": "5-fold out-of-fold predictions on X_train",
+        "scores": {
+            "T-Learner (XGB)": {
+                "qini_score": 0.08079735059131612,
+                "auuc_score": 0.5795230698563643
+            },
+            "T-Learner (LR)": {
+                "qini_score": 0.062135931797145806,
+                "auuc_score": 0.5613562545017575
+            },
+            "T-Learner (RF)": {
+                "qini_score": 0.05727632787606596,
+                "auuc_score": 0.5552751184559592
+            }
+        }
     }
 }
