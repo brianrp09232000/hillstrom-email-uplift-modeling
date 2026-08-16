@@ -1,6 +1,85 @@
 import numpy as np
 import pandas as pd
 from causalml.metrics import auuc_score, get_cumgain, get_qini, qini_score
+from sklearn.model_selection import StratifiedKFold
+
+
+def stratified_uplift_folds(y, treatment, n_splits=5, random_state=42):
+    """Return train/validation indices for uplift out-of-fold evaluation.
+
+    The folds are stratified on the joint treatment/outcome label rather than on
+    treatment alone.  This keeps treated/control responders and non-responders
+    represented in every fold, which is important for sparse binary outcomes.
+    Only the training split should be passed to this helper; the held-out test
+    set must never participate in model or hyperparameter selection.
+
+    Returns a list of (train_idx, val_idx) pairs (not a one-shot generator) so
+    the folds can be iterated more than once, e.g. across several model families.
+    """
+    y = np.asarray(y)
+    treatment = np.asarray(treatment)
+
+    if len(y) != len(treatment):
+        raise ValueError("y and treatment must have the same length.")
+    if not set(np.unique(y)).issubset({0, 1}):
+        raise ValueError("y must be binary for joint-stratified uplift folds.")
+    if not set(np.unique(treatment)).issubset({0, 1}):
+        raise ValueError("treatment must be binary for uplift evaluation.")
+
+    joint_strata = treatment.astype(int) * 2 + y.astype(int)
+    splitter = StratifiedKFold(
+        n_splits=n_splits,
+        shuffle=True,
+        random_state=random_state,
+    )
+    return list(splitter.split(np.zeros(len(y)), joint_strata))
+
+
+def validate_prediction_frame(
+    frame,
+    y_true,
+    treatment=None,
+    *,
+    frame_name="prediction frame",
+    row_id_col=None,
+):
+    """Fail fast when a saved prediction file is not aligned to a data split.
+
+    Row counts alone cannot detect stale or reordered prediction files.  The
+    saved ``y_true`` (and, when supplied, ``treatment``) vectors provide a small
+    deterministic fingerprint of the canonical train/test split.  A sequential
+    row identifier can also be checked when a model writes one.
+    """
+    if "y_true" not in frame.columns:
+        raise ValueError(f"{frame_name} must include a y_true column.")
+
+    expected_y = np.asarray(y_true)
+    if len(frame) != len(expected_y):
+        raise ValueError(
+            f"{frame_name} has {len(frame)} rows; expected {len(expected_y)}."
+        )
+    if not np.array_equal(frame["y_true"].to_numpy(), expected_y):
+        raise ValueError(f"{frame_name} y_true does not match the canonical split.")
+
+    if treatment is not None:
+        if "treatment" not in frame.columns:
+            raise ValueError(f"{frame_name} must include a treatment column.")
+        expected_treatment = np.asarray(treatment)
+        if not np.array_equal(frame["treatment"].to_numpy(), expected_treatment):
+            raise ValueError(
+                f"{frame_name} treatment does not match the canonical split."
+            )
+
+    if row_id_col is not None:
+        if row_id_col not in frame.columns:
+            raise ValueError(f"{frame_name} must include {row_id_col}.")
+        expected_ids = np.arange(len(frame))
+        if not np.array_equal(frame[row_id_col].to_numpy(), expected_ids):
+            raise ValueError(
+                f"{frame_name} {row_id_col} is not the canonical sequential row id."
+            )
+
+    return True
 
 
 def _rank_mask(tau_hat, top_fraction):
