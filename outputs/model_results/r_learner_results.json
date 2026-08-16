@@ -18,16 +18,16 @@
         "winning_family": "random_forest",
         "oof_scores": {
             "random_forest": {
-                "qini_score": 0.05592745307859044,
-                "auuc_score": 0.5549377896290982
+                "qini_score": 0.06873065088580685,
+                "auuc_score": 0.5667831734256027
             },
             "linear": {
-                "qini_score": 0.04237561502666464,
-                "auuc_score": 0.5416867744478264
+                "qini_score": 0.06590712925073428,
+                "auuc_score": 0.5645382416592676
             },
             "lightgbm": {
-                "qini_score": 0.03821357906413884,
-                "auuc_score": 0.537884506141152
+                "qini_score": 0.049615938183637735,
+                "auuc_score": 0.5471816978828427
             }
         }
     },
@@ -42,7 +42,7 @@
             "actual_lift_se": 0.008237964437193027,
             "actual_lift_ci_lower": 0.04434087887942794,
             "actual_lift_ci_upper": 0.0766336994732246,
-            "mean_tau_hat": 0.07737628647821643
+            "mean_tau_hat": 0.07740683317737498
         },
         "mens_only": {
             "n_customers": 7253,
@@ -54,7 +54,7 @@
             "actual_lift_se": 0.007910325548315382,
             "actual_lift_ci_lower": 0.02625576665689485,
             "actual_lift_ci_upper": 0.057264242806291145,
-            "mean_tau_hat": 0.0391510612382042
+            "mean_tau_hat": 0.03914724203211482
         },
         "both": {
             "n_customers": 1573,
@@ -66,7 +66,7 @@
             "actual_lift_se": 0.02066544679262129,
             "actual_lift_ci_lower": 0.11927763327254773,
             "actual_lift_ci_upper": 0.2002861846996232,
-            "mean_tau_hat": 0.0786010089417835
+            "mean_tau_hat": 0.07840092939056685
         },
         "Overall": {
             "n_customers": 16000,
@@ -78,7 +78,7 @@
             "actual_lift_se": 0.005554343980065103,
             "actual_lift_ci_lower": 0.05016521579515824,
             "actual_lift_ci_upper": 0.07193824419701345,
-            "mean_tau_hat": 0.060168719588802815
+            "mean_tau_hat": 0.060161014350298664
         }
     },
     "mens_womens_segment_train": {
@@ -183,25 +183,25 @@
         "agrees": false
     },
     "qini_score": {
-        "R-Learner": 0.04584695109057349
+        "R-Learner": 0.04581703687157491
     },
     "auuc_score": {
-        "R-Learner": 0.5471609501686595
+        "R-Learner": 0.54706307043662
     },
     "ate_test": 0.06105172999608584,
-    "top_decile_actual_lift": 0.07231478199220134,
+    "top_decile_actual_lift": 0.0704393438983098,
     "uplift_at_top_k": {
         "10pct": {
-            "actual_lift": 0.07231478199220134,
-            "incremental_outcomes_captured": 76.21978021978022
+            "actual_lift": 0.0704393438983098,
+            "incremental_outcomes_captured": 74.1021897810219
         },
         "20pct": {
-            "actual_lift": 0.07266047788069085,
-            "incremental_outcomes_captured": 154.33085501858739
+            "actual_lift": 0.07329371322639042,
+            "incremental_outcomes_captured": 154.94290976058934
         },
         "30pct": {
-            "actual_lift": 0.07017843726959201,
-            "incremental_outcomes_captured": 223.30778739184177
+            "actual_lift": 0.07064839746373665,
+            "incremental_outcomes_captured": 224.3793103448276
         }
     },
     "roi_fixed_volume_comparison": {
@@ -209,16 +209,16 @@
         "top_k": 0.3,
         "n_targeted": 4800,
         "target_by_response_probability": {
-            "incremental_conversion_rate": 0.0019483598430966847,
-            "ci_lower": -0.004386385993697614,
-            "ci_upper": 0.008283105679890983,
-            "net_value": 818.7767623353175
+            "incremental_conversion_rate": 0.0019060664814047282,
+            "ci_lower": -0.004434939894447191,
+            "ci_upper": 0.008247072857256649,
+            "net_value": 795.7937242075584
         },
         "target_by_predicted_uplift": {
-            "incremental_conversion_rate": 0.006348286366684044,
-            "ci_lower": 0.0017875635386149199,
-            "ci_upper": 0.01090900919475317,
-            "net_value": 3209.782702877041
+            "incremental_conversion_rate": 0.006066124008884367,
+            "ci_lower": 0.001548670087813132,
+            "ci_upper": 0.010583577929955602,
+            "net_value": 3056.4501710541626
         }
     },
     "roi_assumptions": {
@@ -230,31 +230,31 @@
     "comparison_vs_x_learner": {
         "womens_only": {
             "true_actual_lift_pooled": 0.07228945699545483,
-            "x_learner_mean_tau_hat": 0.0733474948696919,
-            "r_learner_mean_tau_hat": 0.07737628647821643,
-            "x_learner_pct_of_true": 1.0146361297789745,
-            "r_learner_pct_of_true": 1.0703675154605383
+            "x_learner_mean_tau_hat": 0.07330683593938397,
+            "r_learner_mean_tau_hat": 0.07740683317737498,
+            "x_learner_pct_of_true": 1.0140736835800706,
+            "r_learner_pct_of_true": 1.0707900763764473
         },
         "mens_only": {
             "true_actual_lift_pooled": 0.04001992027993122,
-            "x_learner_mean_tau_hat": 0.04180655401671589,
-            "r_learner_mean_tau_hat": 0.0391510612382042,
-            "x_learner_pct_of_true": 1.0446436105891148,
-            "r_learner_pct_of_true": 0.9782893360194242
+            "x_learner_mean_tau_hat": 0.041805192609809645,
+            "r_learner_mean_tau_hat": 0.03914724203211482,
+            "x_learner_pct_of_true": 1.044609592357776,
+            "r_learner_pct_of_true": 0.9781939033933055
         },
         "both": {
             "true_actual_lift_pooled": 0.10323783459116045,
-            "x_learner_mean_tau_hat": 0.07877924624737355,
-            "r_learner_mean_tau_hat": 0.0786010089417835,
-            "x_learner_pct_of_true": 0.7630850313681306,
-            "r_learner_pct_of_true": 0.7613585586433209
+            "x_learner_mean_tau_hat": 0.07889368625813523,
+            "r_learner_mean_tau_hat": 0.07840092939056685,
+            "x_learner_pct_of_true": 0.7641935398060969,
+            "r_learner_pct_of_true": 0.7594205138169353
         },
         "Overall": {
             "true_actual_lift_pooled": 0.06088195726098464,
-            "x_learner_mean_tau_hat": 0.05958360117659554,
-            "r_learner_mean_tau_hat": 0.060168719588802815,
-            "x_learner_pct_of_true": 0.9786742059092582,
-            "r_learner_pct_of_true": 0.9882849089571092
+            "x_learner_mean_tau_hat": 0.05957600446950854,
+            "r_learner_mean_tau_hat": 0.060161014350298664,
+            "x_learner_pct_of_true": 0.9785494282669358,
+            "r_learner_pct_of_true": 0.9881583486615668
         }
     }
 }

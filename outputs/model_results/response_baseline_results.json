@@ -1,10 +1,10 @@
 {
     "logistic_regression": {
-        "roc_auc": 0.624535012709177,
+        "roc_auc": 0.6244800326973584,
         "precision": 0.0,
         "recall": 0.0,
         "f1_score": 0.0,
-        "brier_score": 0.12248658385961601,
+        "brier_score": 0.12249280811690579,
         "confusion_matrix": [
             [
                 13651,
@@ -17,11 +17,11 @@
         ]
     },
     "xgboost": {
-        "roc_auc": 0.6149978985660258,
+        "roc_auc": 0.6163181828940811,
         "precision": 0.0,
         "recall": 0.0,
         "f1_score": 0.0,
-        "brier_score": 0.1229669991690411,
+        "brier_score": 0.12297476050123737,
         "confusion_matrix": [
             [
                 13650,
@@ -33,7 +33,18 @@
             ]
         ]
     },
+    "validation_uplift_metrics": {
+        "Response Baseline (XGB)": {
+            "qini_score": 0.04005178779586484,
+            "auuc_score": 0.537346099399458
+        },
+        "Response Baseline (LR)": {
+            "qini_score": 0.03287667989625181,
+            "auuc_score": 0.5313588824709247
+        }
+    },
     "metadata": {
+        "validation_method": "5-fold out-of-fold predictions on X_train",
         "outcome": "visit",
         "test_size": 16000,
         "test_visit_rate": 0.1468125,
